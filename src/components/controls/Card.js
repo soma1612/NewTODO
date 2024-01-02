@@ -61,13 +61,13 @@ const MuiCard = (props) => {
         ) : (
           null
         )}
-        {page.includes("completed") ? (
+        {/* {page.includes("completed") ? (
           <CardActions>
             <IconButton aria-label="delete" color="error" onClick={() => onDelete(data.id)}>
               <DeleteIcon />
             </IconButton>
           </CardActions>
-        ) : (null)}
+        ) : (null)} */}
 
       </Card>
     </>
