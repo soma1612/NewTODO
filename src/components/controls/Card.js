@@ -10,6 +10,12 @@ import { completeTaskData, deleteData } from '../funcationality/actions/actions'
 
 const MuiCard = (props) => {
   const { page, data } = props;
+
+
+  
+  
+
+
   const [checked, setChecked] = useState(false);
   const dispatch = useDispatch();
 
@@ -45,7 +51,9 @@ const MuiCard = (props) => {
           ) : null}
           <Typography style={{ marginLeft: '8px', textTransform: 'uppercase' }}>
             <div>{data.taskName}</div>
-            <div>{data.completionTime}</div>
+            {/* <div>10:30AM, 26/12/2023</div> */}
+            <div>{data.formattedDate}</div>
+            {/* <div>{NewCompletionTime}</div> */}
           </Typography>
         </CardContent>
         {page.includes("home") ? (

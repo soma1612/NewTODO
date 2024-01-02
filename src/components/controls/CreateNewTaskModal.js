@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dialog, DialogActions, DialogContent, Button, DialogTitle, TextField, Snackbar, Alert } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, Button, DialogTitle, TextField,  Alert } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
@@ -11,23 +11,34 @@ const MuiModal = (props) => {
 
   const { open, handleClose, name } = props;
 
-  // const [value, setValue] = useState();
-  // const { task, setTask } = useState('');
-
-
   const [taskName, setTaskName] = useState('');
   const [completionTime, setCompletionTime] = useState('');
+  const [formattedDateTime, setFormattedDateTime] = useState('');
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
+ 
 
   const dispatch = useDispatch();
-
 
   const generateTaskId = () => {
     //parseInt(Date.now() * Math.random()).toString()
     return Math.random().toString(36).substring(2, 15);
   };
 
+  const convertDateTimeFormat = (inputStr) => {
+    const inputDate = new Date(inputStr);
+    const formattedDate =
+      ("0" + inputDate.getHours()).slice(-2) +
+      ":" +
+      ("0" + inputDate.getMinutes()).slice(-2) +
+      (inputDate.getHours() < 12 ? "AM" : "PM") +
+      ", " +
+      ("0" + inputDate.getDate()).slice(-2) +
+      "/" +
+      ("0" + (inputDate.getMonth() + 1)).slice(-2) +
+      "/" +
+      inputDate.getFullYear();
+    return formattedDate;
+  };
 
 
   const handleButtonClick = () => {
@@ -44,7 +55,10 @@ const MuiModal = (props) => {
       }
 
 
-      const dataToSave = { id: generateTaskId(), taskName: taskName, completionTime: completionTime }
+      const formattedDate = convertDateTimeFormat(completionTime);
+      setFormattedDateTime(formattedDate);
+debugger;
+      const dataToSave = { id: generateTaskId(), taskName: taskName, formattedDate: formattedDate }
       dispatch(saveData(dataToSave));
 
       // Reset form fields and error

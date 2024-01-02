@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 
 
 const Home = () => {
+    debugger;
     const savedData = useSelector((state) => state.savedData);
 
     return (
