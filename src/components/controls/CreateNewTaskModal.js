@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Dialog, DialogActions, DialogContent, Button, DialogTitle, TextField,  Alert } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-
-
 import { useDispatch } from 'react-redux';
 import { saveData } from '../funcationality/actions/actions';
 
@@ -40,7 +38,6 @@ const MuiModal = (props) => {
     return formattedDate;
   };
 
-
   const handleButtonClick = () => {
 
     if (taskName && completionTime) {
@@ -54,11 +51,10 @@ const MuiModal = (props) => {
         return;
       }
 
+      const formattedCompletedDate = convertDateTimeFormat(completionTime);
+      setFormattedDateTime(formattedCompletedDate);
 
-      const formattedDate = convertDateTimeFormat(completionTime);
-      setFormattedDateTime(formattedDate);
-debugger;
-      const dataToSave = { id: generateTaskId(), taskName: taskName, formattedDate: formattedDate }
+      const dataToSave = { id: generateTaskId(), taskName: taskName, formattedCompletedDate: formattedCompletedDate }
       dispatch(saveData(dataToSave));
 
       // Reset form fields and error
@@ -84,7 +80,8 @@ debugger;
   }
 
   return (
-    <> <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <> 
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Dialog open={open} onClose={handleClose}>
 
         <DialogTitle >{name} Task</DialogTitle>

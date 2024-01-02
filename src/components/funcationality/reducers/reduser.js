@@ -7,6 +7,7 @@ const initialState = {
   
   // Reducer function
   const dataReducer = (state = initialState, action) => {
+    debugger;
     switch (action.type) {
       case 'SAVE_DATA':
         return {
