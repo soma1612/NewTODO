@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { Card, CardContent, Typography, CardActions, IconButton, Checkbox } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import MuiModal from './CreateNewTaskModal';
-import { useDispatch } from 'react-redux';
-import { completeTaskData, deleteData } from '../funcationality/actions/actions';
+import MuiEditModal from './Editmodal';
+import EditableComponent2 from './EditModal2';
+import { useDispatch, useSelector  } from 'react-redux';
+import { completeTaskData, deleteData,selectTaskToEdit } from '../funcationality/actions/actions';
 
-const MuiCard = (props) => {
-  const { page, data } = props;
+
+// const MuiCard = (props) => {
+//   const { page, data } = props;
+const MuiCard = ({ page, data }) => {
 
   const [checked, setChecked] = useState(false);
   const [isopenModal, setIsOpenModal] = useState(false);
@@ -15,6 +18,8 @@ const MuiCard = (props) => {
   const closeModal = () => { setIsOpenModal(false); };
 
   const dispatch = useDispatch();
+
+  const savedData = useSelector((state) => state.savedData);
 
   const handleChange = (taskId) => {
     //setChecked(event.target.checked);
@@ -24,9 +29,13 @@ const MuiCard = (props) => {
   const onDelete = (taskId) => {
     dispatch(deleteData(taskId));
   }
-  const onEdit = (taskDetails) => {
-    alert('Edit clicked ' + taskDetails);
-    //  openModal(); 
+
+ 
+  const onEdit = (taskId) => {
+    debugger;
+    dispatch(selectTaskToEdit(taskId));
+    //console.log('Edit clicked ' + taskDetails);
+      openModal(); 
   }
   return (
     <>
@@ -43,10 +52,17 @@ const MuiCard = (props) => {
         </CardContent>
         {page.includes("home") ? (
           <CardActions>
-            <IconButton aria-label="edit" color="success" onClick={() => onEdit(data)}>
+            {/* <IconButton aria-label="edit" color="success" 
+            onClick={openModal} >
+              <EditIcon />
+              <MuiModal open={isopenModal} handleClose={closeModal} name="Edit" taskDetails={data}/>
+            </IconButton> */}
+            <IconButton aria-label="edit" color="success" onClick={() => onEdit(data.id)}>
               <EditIcon />
             </IconButton>
-            <MuiModal open={isopenModal} handleClose={closeModal} name="Edit" />
+            <MuiEditModal open={isopenModal} handleClose={closeModal} />
+
+            {/* <EditableComponent2 open={isopenModal} handleClose={closeModal} /> */}
             <IconButton aria-label="delete" color="error" onClick={() => onDelete(data.id)}>
               <DeleteIcon />
             </IconButton>

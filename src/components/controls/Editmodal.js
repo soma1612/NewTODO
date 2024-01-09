@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Dialog, DialogActions, DialogContent, Button, DialogTitle, TextField, Alert } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateData } from '../funcationality/actions/actions';
@@ -13,6 +13,21 @@ const MuiEditModal = (props) => {
     const savedData = useSelector((state) => state.savedData);
     const [taskName, setTaskName] = useState('');
     const [completionTime, setCompletionTime] = useState('');
+
+    // console.log("before"+ taskName);
+    // console.log("after"+ completionTime)
+    useEffect(() => {
+        // Find the selected item in the savedData array
+        const selectedItem = savedData.find((item) => item.id === selectedItemToEdit);
+    
+        // If the selected item exists, set the taskName state to its taskName
+        if (selectedItem) {
+          setTaskName(selectedItem.taskName);
+          setCompletionTime(selectedItem.formattedCompletedDateTime)
+        }
+      }, [selectedItemToEdit, savedData]);
+    //   console.log("after"+ taskName);
+    //   console.log("after"+ completionTime)
 
     const convertDateTimeFormat = (inputStr) => {
         const inputDate = new Date(inputStr);
@@ -30,10 +45,11 @@ const MuiEditModal = (props) => {
         return formattedDate;
     };
 
+
     const handleEditSubmitClick = () => {
 
         const formattedCompletedDateTime = convertDateTimeFormat(completionTime);
-        // debugger;
+         debugger;
         const taskDetailsToSave = {
             taskName: taskName,
             CompletionTime: formattedCompletedDateTime
@@ -67,8 +83,8 @@ const MuiEditModal = (props) => {
                             id="txtTask"
                             label="Task Name"
                             variant="standard"
-                            // value={taskName}
-                            value={taskName || savedData.find((item) => item.id === selectedItemToEdit).taskName}
+                             value={taskName}
+                           // value={taskName || savedData.find((item) => item.id === selectedItemToEdit).taskName}
                             onChange={(e) => setTaskName(e.target.value)}
                         />
 
@@ -79,8 +95,8 @@ const MuiEditModal = (props) => {
                         type="datetime-local"
                         variant="standard"
                         style={{ marginTop: '16px' }}
-                        //value={completionTime}
-                        value={completionTime || savedData.find((item) => item.id === selectedItemToEdit).completionTime}
+                        value={completionTime}
+                       // value={completionTime || savedData.find((item) => item.id === selectedItemToEdit).completionTime}
                         onChange={(e) => setCompletionTime(e.target.value)}
                         required
                     />

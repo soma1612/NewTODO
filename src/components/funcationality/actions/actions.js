@@ -14,3 +14,12 @@ export const saveData = (data) => ({
     payload: taskId,
   });
 
+  export const selectTaskToEdit = (taskId) => ({
+    type: 'SELECT_DATA_TO_EDIT',
+    payload: taskId,
+  });
+  
+  export const updateData = (data) => ({
+    type: 'EDIT_DATA',
+    payload: data,
+  });

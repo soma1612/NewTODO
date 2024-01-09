@@ -18,7 +18,7 @@ const MuiButton = () => {
             >
                 <AddIcon />
             </Fab>
-            <MuiModal open={isopenModal} handleClose={closeModal} name="Add"/>
+            <MuiModal open={isopenModal} handleClose={closeModal} name="Add" taskDetail=""/>
         </Stack>
     )
 }

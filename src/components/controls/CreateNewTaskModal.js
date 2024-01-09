@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dialog, DialogActions, DialogContent, Button, DialogTitle, TextField,  Alert } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -7,7 +7,7 @@ import { saveData } from '../funcationality/actions/actions';
 
 const MuiModal = (props) => {
 
-  const { open, handleClose, name } = props;
+  const { open, handleClose, name ,taskDetail} = props;
 
   const [taskName, setTaskName] = useState('');
   const [completionTime, setCompletionTime] = useState('');
@@ -39,7 +39,7 @@ const MuiModal = (props) => {
   };
 
   const handleButtonClick = () => {
-
+debugger;
     if (taskName && completionTime) {
      
      // Validate completion time
@@ -54,7 +54,12 @@ const MuiModal = (props) => {
       const formattedCompletedDate = convertDateTimeFormat(completionTime);
       setFormattedDateTime(formattedCompletedDate);
 
-      const dataToSave = { id: generateTaskId(), taskName: taskName, formattedCompletedDate: formattedCompletedDate }
+      const dataToSave = {
+         id: generateTaskId(),
+          taskName: taskName,
+          completionTime:completionTime,
+           formattedCompletedDate: formattedCompletedDate 
+          }
       dispatch(saveData(dataToSave));
 
       // Reset form fields and error
@@ -78,6 +83,25 @@ const MuiModal = (props) => {
     setCompletionTime('');
     setError('');
   }
+
+  // debugger;
+  // if(name.includes("Edit")){
+  //   console.log(taskDetail);
+  //   // setTaskName(taskDetail.taskName);
+  //   // setCompletionTime(taskDetail.completionTime);
+  //variant="contained" size="small"
+  // }
+
+  //alert(name);
+  // useEffect(()=>{
+  //   loaderData();
+  // },[])
+
+  // const loaderData=()=>{
+  //   debugger;
+  //   setTaskName(taskDetail.taskName);
+  //   setCompletionTime(taskDetail.completionTime);
+  // }
 
   return (
     <> 
